@@ -9,7 +9,7 @@ class PropertyEntry(ttk.Entry):
         ttk.Button(self, text="\u2398").pack(side=tk.RIGHT)
 
 
-class PropertiesFrame(tk.Frame):
+class PropertiesFrame(ttk.Frame):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
