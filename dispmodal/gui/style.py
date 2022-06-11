@@ -1,1 +1,10 @@
-BACKGROUND = "white"
+STYLE = {
+    "root": {
+        "background": "white",
+    },
+    "widgets": {
+        "TFrame": {
+            "background": "white",
+        }
+    }
+}
