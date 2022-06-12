@@ -93,6 +93,18 @@ class App(tk.Tk):
             tk_msgbox.showerror("", str(e))
 
     def _show(self):
+        try:
+            self.properties_frame.set_values(
+                self.current_doc.get("from"),
+                self.current_doc.get("to"),
+                self.current_doc.get("price"),
+            )
+            self.comment_frame.set_value(
+                self.current_doc.get("user_comment", ""),
+            )
+        except Exception as e:
+            logging.error("", exc_info=True)
+
         self.deiconify()
 
     def _hide(self):

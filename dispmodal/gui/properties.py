@@ -32,6 +32,15 @@ class PropertiesFrame(ttk.Frame):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
-        PropertyEntry(self).pack(fill=tk.X, ipadx=100, pady=5, ipady=5)
-        PropertyEntry(self).pack(fill=tk.X, ipadx=100, pady=5, ipady=5)
-        PropertyEntry(self).pack(fill=tk.X, ipadx=100, pady=5, ipady=5)
+        self.entries = [PropertyEntry(self) for _ in range(3)]
+
+        for entry in self.entries:
+            entry.pack(fill=tk.X, ipadx=100, pady=5, ipady=5)
+
+    def set_values(self, *values):
+        for entry, value in zip(self.entries, values):
+            if value is None:
+                value = ""
+
+            entry.delete(0, tk.END)
+            entry.insert(0, str(value))
