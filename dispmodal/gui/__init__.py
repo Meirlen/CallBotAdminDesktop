@@ -4,10 +4,8 @@ import tkinter.messagebox as tk_msgbox
 import logging
 import queue
 
-from .properties import PropertiesFrame
-from .comment import CommentFrame
-from .buttons import AcceptButton
-from .style import STYLE
+from dispmodal.gui.frame import AppFrame
+from dispmodal.gui.style import STYLE
 from dispmodal.storage import attach_listener
 
 
@@ -18,23 +16,11 @@ class App(tk.Tk):
         self._start_storage_listener()
 
         self._configure_style()
-        self._create_widgets()
+
+        self.frame = AppFrame(self)
+        self.frame.pack(fill=tk.X, padx=125, pady=35)
 
         self.protocol("WM_DELETE_WINDOW", self._ignore)
-
-    def _create_widgets(self):
-        frame = ttk.Frame(self)
-
-        self.properties_frame = PropertiesFrame(frame)
-        self.properties_frame.pack(fill=tk.X)
-
-        self.comment_frame = CommentFrame(frame)
-        self.comment_frame.pack(fill=tk.X)
-
-        self.accept_button = AcceptButton(frame)
-        self.accept_button.pack(fill=tk.X, pady=20, ipady=10)
-
-        frame.pack(fill=tk.X, padx=125, pady=35)
 
     def _configure_style(self):
         self.style = ttk.Style(self)
@@ -110,12 +96,12 @@ class App(tk.Tk):
 
     def _show(self):
         try:
-            self.properties_frame.set_values(
+            self.frame.properties.set_values(
                 self.current_doc.get("from"),
                 self.current_doc.get("to"),
                 self.current_doc.get("price"),
             )
-            self.comment_frame.set_value(
+            self.frame.comment.set_value(
                 self.current_doc.get("user_comment", ""),
             )
         except Exception as e:

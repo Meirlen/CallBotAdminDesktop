@@ -14,7 +14,7 @@ class PropertyEntry(ttk.Entry):
 
         super().__init__(*args, **kwargs)
 
-        self._icon_copy = tk.PhotoImage(file=Path(__file__).parent / "icons" / "copy.png")
+        self._icon_copy = tk.PhotoImage(file=Path(__file__).parent.parent / "icons" / "copy.png")
 
         ttk.Button(
             self,
