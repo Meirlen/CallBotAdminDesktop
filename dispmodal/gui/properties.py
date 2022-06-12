@@ -26,6 +26,6 @@ class PropertiesFrame(ttk.Frame):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
-        PropertyEntry(self).pack(fill=tk.X, pady=5, ipady=10)
-        PropertyEntry(self).pack(fill=tk.X, pady=5, ipady=10)
-        PropertyEntry(self).pack(fill=tk.X, pady=5, ipady=10)
+        PropertyEntry(self).pack(fill=tk.X, ipadx=100, pady=5, ipady=5)
+        PropertyEntry(self).pack(fill=tk.X, ipadx=100, pady=5, ipady=5)
+        PropertyEntry(self).pack(fill=tk.X, ipadx=100, pady=5, ipady=5)
