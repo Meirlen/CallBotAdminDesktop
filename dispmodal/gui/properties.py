@@ -1,6 +1,8 @@
+from pathlib import Path
 import tkinter as tk
 import tkinter.ttk as ttk
 import tkinter.font as tk_font
+
 
 class PropertyEntry(ttk.Entry):
     def __init__(self, *args, **kwargs):
@@ -10,7 +12,14 @@ class PropertyEntry(ttk.Entry):
 
         super().__init__(*args, **kwargs)
 
-        ttk.Button(self, text="\u2398").pack(side=tk.RIGHT)
+        self._icon_copy = tk.PhotoImage(file=Path(__file__).parent / "icons" / "copy.png")
+
+        ttk.Button(
+            self,
+            style="Copy.Property.TButton",
+            image=self._icon_copy,
+            takefocus=0,
+        ).pack(side=tk.RIGHT, padx=5)
 
 
 class PropertiesFrame(ttk.Frame):
