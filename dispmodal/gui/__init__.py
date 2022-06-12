@@ -10,6 +10,8 @@ class App(tk.Tk):
     def __init__(self):
         super().__init__()
 
+        self.attributes("-topmost", True)
+
         self.style = ttk.Style(self)
         self._configure_style()
 
