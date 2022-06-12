@@ -2,6 +2,7 @@ import tkinter as tk
 import tkinter.ttk as ttk
 
 from .properties import PropertiesFrame
+from .comment import CommentFrame
 from .style import STYLE
 
 
@@ -15,7 +16,7 @@ class App(tk.Tk):
         frame = ttk.Frame(self)
 
         PropertiesFrame(frame).pack(fill=tk.X)
-        ...
+        CommentFrame(frame).pack(fill=tk.X)
 
         frame.pack(fill=tk.BOTH, padx=125, pady=35)
 

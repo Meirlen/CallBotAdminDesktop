@@ -6,6 +6,9 @@ STYLE = {
         "TFrame": {
             "background": "white",
         },
+        "TLabel": {
+            "background": "white",
+        },
 
         "Property.TEntry": {
             "fieldbackground": "#F8F9FA",
