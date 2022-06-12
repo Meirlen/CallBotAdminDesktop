@@ -17,11 +17,10 @@ class App(tk.Tk):
 
         self._start_storage_listener()
 
-        self.attributes("-topmost", True)
-
-        self.style = ttk.Style(self)
         self._configure_style()
+        self._create_widgets()
 
+    def _create_widgets(self):
         frame = ttk.Frame(self)
 
         self.properties_frame = PropertiesFrame(frame)
@@ -35,6 +34,15 @@ class App(tk.Tk):
 
         frame.pack(fill=tk.X, padx=125, pady=35)
 
+    def _configure_style(self):
+        self.style = ttk.Style(self)
+
+        for selector, kw in STYLE["widgets"].items():
+            self.style.configure(selector, **kw)
+        self.config(**STYLE["root"])
+
+        self.attributes("-topmost", True)
+
     def _start_storage_listener(self):
         self._hide()
 
@@ -43,11 +51,6 @@ class App(tk.Tk):
 
         self.current_doc = None
         self.after(100, self._poll_queue)
-
-    def _configure_style(self):
-        for selector, kw in STYLE["widgets"].items():
-            self.style.configure(selector, **kw)
-        self.config(**STYLE["root"])
 
     def _poll_queue(self):
         try:
@@ -67,7 +70,7 @@ class App(tk.Tk):
                 try:
                     doc_status = doc.get("status")
                 except Exception as e:
-                    logging.warning(str(e))
+                    logging.warning("", exc_info=True)
                     continue
 
                 if doc_status == "new":
