@@ -20,6 +20,8 @@ class App(tk.Tk):
         self._configure_style()
         self._create_widgets()
 
+        self.protocol("WM_DELETE_WINDOW", self._ignore)
+
     def _create_widgets(self):
         frame = ttk.Frame(self)
 
@@ -50,6 +52,8 @@ class App(tk.Tk):
         attach_listener(self.listener_queue)
 
         self.current_doc = None
+        self.ignored_docs_ids = set()
+
         self.after(100, self._poll_queue)
 
     def _poll_queue(self):
@@ -64,17 +68,26 @@ class App(tk.Tk):
 
     def _process_snapshot(self, snapshot):
         try:
+            doc_snapshots, changes, _ = snapshot
+
+            self.ignored_docs_ids -= {change.document.id for change in changes}
+
             docs = []
 
-            for doc in snapshot[0]:
+            for doc in doc_snapshots:
+                if doc.id in self.ignored_docs_ids:
+                    continue
+
                 try:
                     doc_status = doc.get("status")
                 except Exception as e:
                     logging.warning("", exc_info=True)
                     continue
 
-                if doc_status == "new":
-                    docs.append({"id": doc.id} | doc.to_dict())
+                if doc_status != "new":
+                    continue
+
+                docs.append({"id": doc.id} | doc.to_dict())
 
             if not docs:
                 self._hide()
@@ -111,4 +124,11 @@ class App(tk.Tk):
         self.deiconify()
 
     def _hide(self):
+        self.current_doc = None
         self.withdraw()
+
+    def _ignore(self):
+        if self.current_doc is not None and "id" in self.current_doc:
+            self.ignored_docs_ids.add(self.current_doc["id"])
+
+        self._hide()
