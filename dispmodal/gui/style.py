@@ -9,6 +9,9 @@ STYLE = {
         "TLabel": {
             "background": "white",
         },
+        "TButton": {
+            "relief": "flat",
+        },
 
         "Property.TEntry": {
             "fieldbackground": "#F8F9FA",
@@ -16,9 +19,13 @@ STYLE = {
         },
         "Copy.Property.TButton": {
             "background": "#F8F9FA",
-            "relief": "flat",
             "width": 2,
             "height": 2,
         },
+
+        "Accept.TButton": {
+            "background": "#0071FE",
+            "foreground": "white",
+        }
     }
 }
