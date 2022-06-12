@@ -3,6 +3,8 @@ import tkinter as tk
 import tkinter.ttk as ttk
 import tkinter.font as tk_font
 
+import pyperclip
+
 
 class PropertyEntry(ttk.Entry):
     def __init__(self, *args, **kwargs):
@@ -19,7 +21,11 @@ class PropertyEntry(ttk.Entry):
             style="Copy.Property.TButton",
             image=self._icon_copy,
             takefocus=0,
+            command=self.copy,
         ).pack(side=tk.RIGHT, padx=5)
+
+    def copy(self):
+        pyperclip.copy(self.get())
 
 
 class PropertiesFrame(ttk.Frame):
