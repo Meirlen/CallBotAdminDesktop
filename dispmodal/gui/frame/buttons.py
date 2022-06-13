@@ -9,8 +9,3 @@ class AcceptButton(ttk.Button):
         kwargs.setdefault("takefocus", 0)
 
         super().__init__(*args, **kwargs)
-
-        ttk.Style(self).map(
-            "Accept.TButton",
-            background=[("active", "#0071FE")]
-        )

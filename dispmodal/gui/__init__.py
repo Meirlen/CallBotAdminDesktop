@@ -5,7 +5,7 @@ import logging
 import queue
 
 from dispmodal.gui.frame import AppFrame
-from dispmodal.gui.style import STYLE
+from dispmodal.gui.style import ROOT_CONFIG, STYLE_CONFIG, STYLE_MAP
 from dispmodal.storage import attach_listener, get_all_docs, get_next_doc, accept_doc
 
 
@@ -24,12 +24,15 @@ class App(tk.Tk):
         self.protocol("WM_DELETE_WINDOW", self._ignore)
 
     def _configure_style(self):
-        self.style = ttk.Style(self)
+        style = ttk.Style(self)
 
-        for selector, kw in STYLE["widgets"].items():
-            self.style.configure(selector, **kw)
-        self.config(**STYLE["root"])
+        for selector, kw in STYLE_CONFIG.items():
+            style.configure(selector, **kw)
 
+        for selector, kw in STYLE_MAP.items():
+            style.map(selector, **kw)
+
+        self.config(**ROOT_CONFIG)
         self.attributes("-topmost", True)
 
     def _start_storage_listener(self):

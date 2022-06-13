@@ -1,8 +1,8 @@
-STYLE = {
-    "root": {
-        "background": "white",
-    },
-    "widgets": {
+ROOT_CONFIG = {
+    "background": "white",
+}
+
+STYLE_CONFIG = {
         "TFrame": {
             "background": "white",
         },
@@ -27,5 +27,10 @@ STYLE = {
             "background": "#0071FE",
             "foreground": "white",
         }
+    }
+
+STYLE_MAP = {
+    "Accept.TButton": {
+        "background": [("active", "#0071FE")],
     }
 }
