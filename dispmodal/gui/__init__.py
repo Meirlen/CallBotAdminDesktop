@@ -6,7 +6,7 @@ import queue
 
 from dispmodal.gui.frame import AppFrame
 from dispmodal.gui.style import STYLE
-from dispmodal.storage import attach_listener
+from dispmodal.storage import attach_listener, get_next_doc
 
 
 class App(tk.Tk):
@@ -38,7 +38,7 @@ class App(tk.Tk):
         attach_listener(self.listener_queue)
 
         self.current_doc = None
-        self.ignored_docs_ids = set()
+        self.ignored_docs = set()
 
         self.after(100, self._poll_queue)
 
@@ -53,50 +53,24 @@ class App(tk.Tk):
         self.after(100, self._poll_queue)
 
     def _process_snapshot(self, snapshot):
+        doc_snapshots, changes, _ = snapshot
+
         try:
-            doc_snapshots, changes, _ = snapshot
+            self.ignored_docs -= {change.document.id for change in changes}
 
-            self.ignored_docs_ids -= {change.document.id for change in changes}
+            doc = get_next_doc(doc_snapshots, self.current_doc, self.ignored_docs)
 
-            docs = []
-
-            for doc in doc_snapshots:
-                if doc.id in self.ignored_docs_ids:
-                    continue
-
-                try:
-                    doc_status = doc.get("status")
-                except Exception as e:
-                    logging.warning("", exc_info=True)
-                    continue
-
-                if doc_status != "new":
-                    continue
-
-                docs.append(
-                    {"id": doc.id, **doc.to_dict()}
-                )
-
-            if not docs:
+            if doc is None:
                 self._hide()
-                return
-
-            current_doc = docs[0]
-
-            if self.current_doc is not None:
-                for doc in docs:
-                    if doc["id"] == self.current_doc["id"]:
-                        current_doc = doc
-                        break
-
-            self.current_doc = current_doc
-
-            self._show()
-
+            else:
+                self._show(doc)
         except Exception as e:
-            tk_msgbox.showerror("", str(e))
+            logging.error(e, exc_info=True)
+            tk_msgbox.showerror(message=str(e))
 
-    def _show(self):
+    def _show(self, doc):
+        self.current_doc = doc
+
         try:
             self.frame.properties.set_values(
                 self.current_doc.get("from"),
@@ -116,7 +90,7 @@ class App(tk.Tk):
         self.withdraw()
 
     def _ignore(self):
-        if self.current_doc is not None and "id" in self.current_doc:
-            self.ignored_docs_ids.add(self.current_doc["id"])
+        if self.current_doc is not None:
+            self.ignored_docs.add(self.current_doc["id"])
 
         self._hide()
