@@ -65,3 +65,9 @@ def accept_doc(doc):
 
     doc_ref = col_ref.document(doc["id"])
     doc_ref.update({"status": "accept"})
+
+
+def get_all_docs():
+    col_ref = get_db().collection("orders")
+
+    return list(col_ref.stream())

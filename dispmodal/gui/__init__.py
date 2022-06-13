@@ -6,7 +6,7 @@ import queue
 
 from dispmodal.gui.frame import AppFrame
 from dispmodal.gui.style import STYLE
-from dispmodal.storage import attach_listener, get_next_doc, accept_doc
+from dispmodal.storage import attach_listener, get_all_docs, get_next_doc, accept_doc
 
 
 class App(tk.Tk):
@@ -58,13 +58,7 @@ class App(tk.Tk):
 
         try:
             self.ignored_docs -= {change.document.id for change in changes}
-
-            doc = get_next_doc(doc_snapshots, self.current_doc, self.ignored_docs)
-
-            if doc is None:
-                self._hide()
-            else:
-                self._show(doc)
+            self._next()
         except Exception as e:
             logging.error(e, exc_info=True)
             tk_msgbox.showerror(message=str(e))
@@ -92,10 +86,22 @@ class App(tk.Tk):
 
     def _accept(self):
         accept_doc(self.current_doc)
-        self._hide()
+
+        self._next()
 
     def _ignore(self):
         if self.current_doc is not None:
             self.ignored_docs.add(self.current_doc["id"])
 
-        self._hide()
+        self._next()
+
+    def _next(self, doc_snapshots=None):
+        if doc_snapshots is None:
+            doc_snapshots = get_all_docs()
+
+        doc = get_next_doc(doc_snapshots, self.current_doc, self.ignored_docs)
+
+        if doc is None:
+            self._hide()
+        else:
+            self._show(doc)
