@@ -78,6 +78,7 @@ class App(tk.Tk):
         except Exception as e:
             logging.error("", exc_info=True)
 
+        self.eval('tk::PlaceWindow . center')
         self.deiconify()
 
     def _hide(self):
