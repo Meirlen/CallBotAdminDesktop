@@ -58,3 +58,10 @@ def get_next_doc(doc_snapshots, current_doc, ignored_docs):
                 break
 
     return next_doc
+
+
+def accept_doc(doc):
+    col_ref = get_db().collection("orders")
+
+    doc_ref = col_ref.document(doc["id"])
+    doc_ref.update({"status": "accept"})

@@ -6,7 +6,7 @@ import queue
 
 from dispmodal.gui.frame import AppFrame
 from dispmodal.gui.style import STYLE
-from dispmodal.storage import attach_listener, get_next_doc
+from dispmodal.storage import attach_listener, get_next_doc, accept_doc
 
 
 class App(tk.Tk):
@@ -20,6 +20,7 @@ class App(tk.Tk):
         self.frame = AppFrame(self)
         self.frame.pack(fill=tk.X, padx=125, pady=35)
 
+        self.frame.accept_btn.config(command=self._accept)
         self.protocol("WM_DELETE_WINDOW", self._ignore)
 
     def _configure_style(self):
@@ -88,6 +89,10 @@ class App(tk.Tk):
     def _hide(self):
         self.current_doc = None
         self.withdraw()
+
+    def _accept(self):
+        accept_doc(self.current_doc)
+        self._hide()
 
     def _ignore(self):
         if self.current_doc is not None:
