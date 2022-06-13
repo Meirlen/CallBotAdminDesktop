@@ -73,7 +73,9 @@ class App(tk.Tk):
                 if doc_status != "new":
                     continue
 
-                docs.append({"id": doc.id} | doc.to_dict())
+                docs.append(
+                    {"id": doc.id, **doc.to_dict()}
+                )
 
             if not docs:
                 self._hide()
