@@ -4,7 +4,7 @@ import tkinter as tk
 import pyperclip
 
 
-class PropertyEntry(tk.Entry):
+class PropertyLabel(tk.Label):
     color = "#F8F9FA"
 
     def __init__(self, *args, **kwargs):
@@ -28,7 +28,7 @@ class PropertyEntry(tk.Entry):
         ).pack(side=tk.RIGHT, padx=5)
 
     def copy(self):
-        pyperclip.copy(self.get())
+        pyperclip.copy(self["text"])
 
 
 class PropertiesFrame(tk.Frame):
@@ -37,15 +37,13 @@ class PropertiesFrame(tk.Frame):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
-        self.entries = [PropertyEntry(self) for _ in range(self.length)]
+        self.labels = [PropertyLabel(self) for _ in range(self.length)]
 
-        for entry in self.entries:
-            entry.pack(fill=tk.X, ipadx=100, pady=5, ipady=5)
+        for label in self.labels:
+            label.pack(fill=tk.X, ipadx=100, pady=5, ipady=5)
 
     def set_values(self, *values):
-        for entry, value in zip(self.entries, values):
-            if value is None:
-                value = ""
-
-            entry.delete(0, tk.END)
-            entry.insert(0, str(value))
+        for label, value in zip(self.labels, values):
+            label.configure(
+                text=value
+            )
