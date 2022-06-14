@@ -3,6 +3,8 @@ import logging
 
 from firebase_admin import initialize_app, credentials, firestore
 
+from .config import CWD
+
 _db = None
 
 
@@ -11,7 +13,7 @@ def get_db():
 
     if _db is None:
         initialize_app(
-            credentials.Certificate("transport-2f82d-firebase-adminsdk-2crxy-133469a4e3.json")
+            credentials.Certificate(CWD / "serviceAccount.json")
         )
         _db = firestore.client()
 
