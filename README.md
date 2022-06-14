@@ -1,5 +1,5 @@
 ### Запустить:
 
 ```shell
-python -m dispmodal.gui
+python -m callbot.gui
 ```

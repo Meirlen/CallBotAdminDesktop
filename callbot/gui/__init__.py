@@ -4,8 +4,8 @@ from pathlib import Path
 import logging
 import queue
 
-from dispmodal.gui.frame import AppFrame
-from dispmodal.storage import (
+from callbot.gui.frame import AppFrame
+from callbot.storage import (
     attach_listener,
     get_all_docs,
     get_next_doc,
