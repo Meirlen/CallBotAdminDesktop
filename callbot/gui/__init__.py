@@ -19,8 +19,14 @@ class App(tk.Tk):
 
         self._start_storage_listener()
 
+        self._app_icon = tk.PhotoImage(
+            file=Path(__file__).parent / "icons" / "app.png"
+        )
+        self.iconphoto(False, self._app_icon)
+        
         self.title("CallBot")
         self.attributes("-topmost", True)
+        
         self.config(background="white")
         self.option_readfile(Path(__file__).parent / "style.cfg")
 
