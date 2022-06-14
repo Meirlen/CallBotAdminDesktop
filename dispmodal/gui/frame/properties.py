@@ -29,10 +29,12 @@ class PropertyEntry(ttk.Entry):
 
 
 class PropertiesFrame(ttk.Frame):
+    length = 4
+
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
-        self.entries = [PropertyEntry(self) for _ in range(3)]
+        self.entries = [PropertyEntry(self) for _ in range(self.length)]
 
         for entry in self.entries:
             entry.pack(fill=tk.X, ipadx=100, pady=5, ipady=5)

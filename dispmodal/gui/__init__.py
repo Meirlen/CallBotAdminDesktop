@@ -74,6 +74,7 @@ class App(tk.Tk):
                 self.current_doc.get("from"),
                 self.current_doc.get("to"),
                 self.current_doc.get("price"),
+                self.current_doc.get("phone"),
             )
             self.frame.comment.set_value(
                 self.current_doc.get("user_comment", ""),
