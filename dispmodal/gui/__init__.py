@@ -1,12 +1,16 @@
 import tkinter as tk
-import tkinter.ttk as ttk
 import tkinter.messagebox as tk_msgbox
+from pathlib import Path
 import logging
 import queue
 
 from dispmodal.gui.frame import AppFrame
-from dispmodal.gui.style import ROOT_CONFIG, STYLE_CONFIG, STYLE_MAP
-from dispmodal.storage import attach_listener, get_all_docs, get_next_doc, accept_doc
+from dispmodal.storage import (
+    attach_listener,
+    get_all_docs,
+    get_next_doc,
+    accept_doc
+)
 
 
 class App(tk.Tk):
@@ -15,25 +19,15 @@ class App(tk.Tk):
 
         self._start_storage_listener()
 
-        self._configure_style()
+        self.attributes("-topmost", True)
+        self.config(background="white")
+        self.option_readfile(Path(__file__).parent / "style.cfg")
 
         self.frame = AppFrame(self)
         self.frame.pack(fill=tk.X, padx=125, pady=35)
 
         self.frame.accept_btn.config(command=self._accept)
         self.protocol("WM_DELETE_WINDOW", self._ignore)
-
-    def _configure_style(self):
-        style = ttk.Style(self)
-
-        for selector, kw in STYLE_CONFIG.items():
-            style.configure(selector, **kw)
-
-        for selector, kw in STYLE_MAP.items():
-            style.map(selector, **kw)
-
-        self.config(**ROOT_CONFIG)
-        self.attributes("-topmost", True)
 
     def _start_storage_listener(self):
         self._hide()

@@ -1,11 +1,14 @@
 import tkinter as tk
-import tkinter.ttk as ttk
 
 
-class AcceptButton(ttk.Button):
+class AcceptButton(tk.Button):
     def __init__(self, *args, **kwargs):
-        kwargs.setdefault("style", "Accept.TButton")
-        kwargs.setdefault("text", "Применить")
-        kwargs.setdefault("takefocus", 0)
+        for prefix in ("", "active"):
+            kwargs.setdefault(prefix + "background", "#0071FE")
 
+        for prefix in ("", "active"):
+            kwargs.setdefault(prefix + "foreground", "white")
+
+        kwargs.setdefault("text", "Применить")
+        
         super().__init__(*args, **kwargs)

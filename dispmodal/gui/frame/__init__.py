@@ -1,12 +1,11 @@
 import tkinter as tk
-import tkinter.ttk as ttk
 
 from .properties import PropertiesFrame
 from .comment import CommentFrame
 from .buttons import AcceptButton
 
 
-class AppFrame(ttk.Frame):
+class AppFrame(tk.Frame):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
