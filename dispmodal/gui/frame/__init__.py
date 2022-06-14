@@ -9,7 +9,7 @@ class AppFrame(tk.Frame):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
-        self.properties = PropertiesFrame(self)
+        self.properties = PropertiesFrame(self, size=4)
         self.properties.pack(fill=tk.X)
 
         self.comment = CommentFrame(self)
