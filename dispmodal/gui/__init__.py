@@ -19,6 +19,7 @@ class App(tk.Tk):
 
         self._start_storage_listener()
 
+        self.title("CallBot")
         self.attributes("-topmost", True)
         self.config(background="white")
         self.option_readfile(Path(__file__).parent / "style.cfg")
